@@ -5,19 +5,43 @@ import React, { useEffect, useState } from "react";
 function App() {
     const [data, setData] = useState([]);
 
-    useEffect(() => {
-        fetch("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,apparent_temperature,wind_speed_10m,precipitation,relative_humidity_2m&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,precipitation,precipitation_probability")
-            .then(response => response.json())
-            .then(json => setData(json));
-    }, []);
-console.log(data);
+
+    const getCoordinates = (city) => {
+        return fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.results && data.results.length > 0) {
+                    return {
+                        latitude: data.results[0].latitude,
+                        longitude: data.results[0].longitude
+                    };
+                } else {
+                    throw new Error("City not found");
+                }
+            });
+    };
+    const getWeather = (lat, lon) => {
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,wind_speed_10m,precipitation,relative_humidity_2m&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max`)
+            .then(res => res.json())
+            .then(data => setData(data));
+    };
+    const handleSearch = () => {
+       // const city = document.querySelector("input").value;
+
+        getCoordinates(city)
+            .then(coords => {
+                getWeather(coords.latitude, coords.longitude);
+            })
+            .catch(err => console.error(err));
+    };
+    const [city, setCity] = useState("");
   return (
     <>
-        <section>
+        <section className="container">
             <header>
                 <h1>How's the sky looking today</h1>
-                <input type="search" />
-                <button>Search</button>
+                <input value={city} onChange={(e) => setCity(e.target.value)} />
+                <button onClick={handleSearch}>Search</button>
             </header>
             <main>
                 <section>
@@ -60,30 +84,15 @@ console.log(data);
                 </section>
                 <h2>Daily forecast</h2>
                 <section>
-                    <div>
-                        <h2>Tue</h2>
-                        <div>
-                            <span>20 </span>
-                            <span>14 </span>
+                    {data.daily ? data.daily.time.map((day, index) => (
+                        <div key={day}>
+                            <h2> {new Date(day).toLocaleDateString("fr-FR", { weekday: "short" })}   </h2>
+                            <div>
+                                <span>{data.daily.temperature_2m_max[index]}°C </span>
+                                <span>{data.daily.temperature_2m_min[index]}°C</span>
+                            </div>
                         </div>
-
-                    </div>
-                    <div>
-                        <h2>Wed</h2>
-                        <div>
-                            <span>20 </span>
-                            <span>14 </span>
-                        </div>
-
-                    </div>
-                    <div>
-                        <h2>Tuu</h2>
-                        <div>
-                            <span>20 </span>
-                            <span>14 </span>
-                        </div>
-
-                    </div>
+                    )) : "Loading..."}
                 </section>
                 <aside>
                     <div>
