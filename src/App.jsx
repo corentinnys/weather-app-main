@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Info from "./Info";
 function App() {
     const [data, setData] = useState([]);
 
@@ -87,7 +88,7 @@ timezone=auto&language=fr&hourly=temperature_2m`)
         99: "/assets/images/icon-storm.webp",
     };
     return (
-    <div className="body">
+    <div className="bg-light">
         <section className="container">
 
             <header className="row">
@@ -106,8 +107,8 @@ timezone=auto&language=fr&hourly=temperature_2m`)
             </header>
             <main className='row'>
                 <div className="col-12">
-                    <section className="current-weather">
-                    <div className="current">
+                    <section className="container-fluid">
+                    <div className="current col-9">
                         <h2>{cityDisplay || "Aucune ville sélectionnée"}</h2>
 
                         {data.current ? (
@@ -126,34 +127,14 @@ timezone=auto&language=fr&hourly=temperature_2m`)
                             <span>Loading...</span>
                         )}
                     </div>
-                    <div className="info-temperature">
-                       <div className="feel-like">
-                           <h2>feel like</h2>
-                           <span>
-        {data.current ? `${data.current.apparent_temperature}°C` : "Loading..."}
-    </span>
-                       </div>
-                        <div className="feel-like">
-                            <h2>humidity</h2>
-                            <span>
-        {data.current ? `${data.current.relative_humidity_2m}%` : "Loading..."}
-    </span>
+                    <div className="container-fluid col-6">
+                        <div className="row">
+                                    <Info value={data?.current?.apparent_temperature}  title={"feels like"} />
+                                    <Info value={data?.current?.relative_humidity_2m}  title={"Humidity"} />
+                                    <Info value={data?.current?.wind_speed_10m} title={"wind"}/>
+                                    <Info value={data?.current?.precipitation} title={"precipitation"} />
                         </div>
-                        <div className="feel-like">
-                            <h2>Wind</h2>
-                            <span>
-        {data.current ? `${data.current.wind_speed_10m} km/h` : "Loading..."}
-    </span>
-                        </div>
-                        <div className="feel-like">
-                            <h2>Precipitation</h2>
-                            {data.current ? (
-                                <span>{data.current.precipitation}</span>
-                            ) : (
 
-                                <svg className="spin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16"><path fill="#fff" d="M9.25 1.5c0 .719-.563 1.25-1.25 1.25-.719 0-1.25-.531-1.25-1.25C6.75.812 7.281.25 8 .25c.688 0 1.25.563 1.25 1.25ZM8 13.25c.688 0 1.25.563 1.25 1.25 0 .719-.563 1.25-1.25 1.25-.719 0-1.25-.531-1.25-1.25 0-.688.531-1.25 1.25-1.25ZM15.75 8c0 .719-.563 1.25-1.25 1.25-.719 0-1.25-.531-1.25-1.25 0-.688.531-1.25 1.25-1.25.688 0 1.25.563 1.25 1.25Zm-13 0c0 .719-.563 1.25-1.25 1.25C.781 9.25.25 8.719.25 8c0-.688.531-1.25 1.25-1.25.688 0 1.25.563 1.25 1.25Zm.625-5.844c.719 0 1.25.563 1.25 1.25 0 .719-.531 1.25-1.25 1.25-.688 0-1.25-.531-1.25-1.25 0-.687.563-1.25 1.25-1.25Zm9.219 9.219c.687 0 1.25.531 1.25 1.25 0 .688-.563 1.25-1.25 1.25-.719 0-1.25-.563-1.25-1.25 0-.719.531-1.25 1.25-1.25Zm-9.219 0c.719 0 1.25.531 1.25 1.25 0 .688-.531 1.25-1.25 1.25-.688 0-1.25-.563-1.25-1.25 0-.719.563-1.25 1.25-1.25Z"/></svg>
-                            )}
-                        </div>
                     </div>
                 </section>
                 <h2 className="title-daily">Daily forecast</h2>
