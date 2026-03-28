@@ -1,154 +1,106 @@
-.body{
-    background-color: hsl(248, 70%, 36%);
-    height: 80vh;
-}
-.container{
-    width: 80%;
-    margin: 0 auto;
+body{
+    background-color: #02012B;
 }
 .current{
-    background: url('../assets/images/bg-today-large.svg');
-    border-radius: 10px;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    background:#25253F;
+    height: 30vh;
+    border-radius: 20px;
+}
+.info{
+    background:#25253F;
+    height: 10vh;
+    border-radius: 20px;
+}
+
+
+
+.current {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column; /* empile tous les blocs verticalement */
+    align-items: flex-start; /* alignement à gauche */
+}
+
+.info-weather {
+    display: flex;
     align-items: center;
-    width: 100%;
-}
-.current h2{
-    color: white;
-    font-size: 1rem;
-}
-.current span{
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
+    gap: 0.5rem;
 }
 
-.info-temperature {
-    width: 100%;
+.info-cards-container {
+    width: 100%;      /* prend toute la largeur */
+}
+
+.info-cards {
     display: flex;
-    justify-content: space-evenly;
+    gap: 1rem;        /* espace horizontal entre les cartes */
+    flex-wrap: wrap;   /* les cartes passent à la ligne si besoin */
 }
 
-.info-temperature h2 {
-    color: white;
-    font-size: .5rem;
+.info-cards .Info {
+    min-width: 100px; /* uniformise la taille des cartes */
+
 }
-.current-weather{
-    width: 90%;
-}
-.feel-like {
-    flex: 1;          /* ⬅️ supprime width: 100% qui entre en conflit avec flex */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: white;
-    font-size: 1.8rem;
-    background: #aa3bff;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;  /* ⬅️ supprime margin: 10px, utilise gap sur le parent */
+.height-100{
+    height: 15vh;
 }
 
-.feel-like h2 {
-    font-size: 0.7rem;
+h6,.temperature span:not(.jours span){
+    font-size: 0.8rem;
 }
-
-.feel-like span {
-    font-size: 1.2rem;
+.previsions{
+    background: #25253F;
+    border-radius: 15px;
 }
-
-.daily-forecast{
-    width: 90%;
+.temperature {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
-
+    gap: 10px;
+    flex-wrap: nowrap;
 }
-.day{ background: #aa3bff;
-    border-radius: 10px;
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: #25253F;
+    border-radius: 50px;
     padding: 5px;
-}
-.daily-forecast h2{
-    font-size: 0.7rem;
-
-    text-align: center;
-}
-.daily-forecast div span{
-    font-size: 0.5rem;
-}
-.temperature{
-    display: flex;
-    justify-content: space-between;
-    color: white;
-}
-main {
-    display: flex;
-    gap: 2rem; /* espace entre les deux blocs */
-    align-items: flex-start;
-}
-.test {
-    flex: 2;
-}
-
-aside {
-    flex: 1; /* plus petit bloc à droite */
-}
-.title-daily{
-    color: white;
-    font-size: 1rem;
-}
-
-.spin {
-    animation: spin 1s infinite;
-}
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-.search-bar{
-    display: flex;
-    align-items: center;
     width: 100%;
     max-width: 400px;
-    background: #1e213a;
-    border-radius: 10px;
-    overflow: hidden;
+    margin: 20px auto;
 }
 
-/* input */
-.search-bar input{
+/* Input */
+.search-bar input {
     flex: 1;
-    padding: 12px 15px;
+    background: transparent;
     border: none;
     outline: none;
-    background: transparent;
+    padding: 10px 15px;
     color: white;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
-/* placeholder */
-.search-bar input::placeholder{
-    color: #888;
+/* Placeholder */
+.search-bar input::placeholder {
+    color: #aaa;
 }
 
-/* bouton */
-.search-bar button{
-    background: #aa3bff;
+/* Button */
+.search-bar button {
+    background: #6C63FF; /* couleur accent */
     border: none;
-    padding: 12px 15px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
     cursor: pointer;
     color: white;
-    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* hover */
-.search-bar button:hover{
-    background: #922ee0;
+/* Hover effet */
+.search-bar button:hover {
+    background: #5848d6;
 }
+
