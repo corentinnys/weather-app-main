@@ -2,36 +2,15 @@ import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Info from "./Info";
 import Days from "./Days";
+import Hours from "./Hours";
 import "./App.css";
-
+import weatherImages from "./weatherImages.js";
 function App() {
     const [data, setData] = useState(null); // données météo
     const [city, setCity] = useState("");    // texte input ville
     const [cityDisplay, setCityDisplay] = useState(""); // nom de ville affiché
 
-    const weatherImages = {
-        0: "/assets/images/icon-sunny.webp",
-        1: "/assets/images/icon-partly-cloudy.webp",
-        2: "/icons/cloudy.png",
-        3: "/assets/images/icon-overcast.webp",
-        45: "/assets/images/icon-fog.webp",
-        48: "/assets/images/icon-fog.webp",
-        51: "/assets/images/icon-drizzle.webp",
-        53: "/assets/images/icon-drizzle.webp",
-        55: "/assets/images/icon-drizzle.webp",
-        61: "/assets/images/icon-rain.webp",
-        63: "/assets/images/icon-rain.webp",
-        65: "/assets/images/icon-rain.webp",
-        71: "/assets/images/icon-snow.webp",
-        73: "/assets/images/icon-snow.webp",
-        75: "/assets/images/icon-snow.webp",
-        80: "/icons/showers.png",
-        81: "/icons/showers.png",
-        82: "/icons/showers.png",
-        95: "/assets/images/icon-storm.webp",
-        96: "/assets/images/icon-storm.webp",
-        99: "/assets/images/icon-storm.webp",
-    };
+
     const getCoordinates = (city) => {
         return fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`)
             .then(res => res.json())
@@ -48,8 +27,7 @@ function App() {
     };
     // Récupération météo
     const getWeather = (lat, lon) => {
-        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=apparent_temperature,relativehumidity_2m,precipitation,windspeed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum&timezone=auto`;
-
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,apparent_temperature,relativehumidity_2m,precipitation,windspeed_10m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_sum&timezone=auto`;
         fetch(url)
             .then(res => {
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
@@ -70,6 +48,11 @@ function App() {
             })
             .catch(err => console.error("Erreur météo :", err));
     };
+
+
+
+
+
 
     // Recherche ville
     const handleSearch = () => {
@@ -193,9 +176,9 @@ function App() {
                             </div>
 
                         </section>
+                        <Hours data={data}  weatherImages={weatherImages}/>
                     </div>
                 </main>
-
             </section>
         </div>
     );

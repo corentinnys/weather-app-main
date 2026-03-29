@@ -3,9 +3,9 @@ import React from "react";
 function Days({ index, data, weatherImages }) {
     return (
         <div className="jours col-4" >
-            {weatherImages?.[data?.daily?.weather_code?.[index]] && (
+            {weatherImages?.[data?.daily?.weathercode?.[index]] && (
                 <img
-                    src={weatherImages[data.daily.weather_code[index]]}
+                    src={weatherImages[data.daily.weathercode[index]]}
                     alt="Weather icon"
                     style={{ width: "50px", height: "50px", marginLeft: "10px" }}
                 />
