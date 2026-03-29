@@ -2,7 +2,7 @@ import React from "react";
 
 function Days({ index, data, weatherImages }) {
     return (
-        <div className="jours col-4" >
+        <div className="jours col-3" >
             {weatherImages?.[data?.daily?.weathercode?.[index]] && (
                 <img
                     src={weatherImages[data.daily.weathercode[index]]}
@@ -11,11 +11,11 @@ function Days({ index, data, weatherImages }) {
                 />
             )}
 
-            <div style={{ display: "flex", gap: "10px", flexWrap: "nowrap",justifyContent:"space-between" }}>
+            <div style={{ display: "flex", gap: "10px", flexWrap: "nowrap",justifyContent:"space-around" }}>
         <span style={{ whiteSpace: "nowrap",fontSize:"0.5rem" }}>
             {data?.daily?.temperature_2m_max?.[index]}°C
         </span>
-                <span style={{ whiteSpace: "nowrap" }}>
+                <span style={{ whiteSpace: "nowrap",fontSize:"0.5rem"}}>
             {data?.daily?.temperature_2m_min?.[index]}°C
         </span>
             </div>

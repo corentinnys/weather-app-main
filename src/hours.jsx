@@ -1,5 +1,7 @@
 import { useState } from "react";
 import images from "./weatherImages.js";
+import DaySelector from "./DaySelector";
+
 
 export default function Hours({ data }) {
     const [selectedDay, setSelectedDay] = useState(null);
@@ -49,49 +51,63 @@ export default function Hours({ data }) {
     return (
         <section>
             {/* 2️⃣ Liste des jours */}
-            <select
-                className="form-select mb-3"
-                value={selectedDay || ""}
-                onChange={(e) => setSelectedDay(e.target.value)}
-            >
-                <option value="">Choisir un jour</option>
-
-                {days.map((day) => (
-                    <option key={day} value={day}>
-                        {day}
-                    </option>
-                ))}
-            </select>
+            <DaySelector
+                days={days}
+                groupedByDay={groupedByDay}
+                images={images}
+                selectedDay={selectedDay}
+                setSelectedDay={setSelectedDay}
+            />
 
             {/* 3️⃣ Heures du jour sélectionné */}
-            {groupedByDay[selectedDay]?.map((h, i) => {
+            {groupedByDay[selectedDay] && (
+                <ul
+                    style={{
+                        padding: 0,
+                        margin: 0,
+                        listStyle: "none",
 
-                // Calculer l'icône avant le return JSX
-                const icon = images?.[h.weathercode] ?? null;
-                return (
-                    <div
-                        key={i}
-                        style={{
-                            minWidth: "60px",
-                            padding: "8px",
-                            borderRadius: "10px",
-                        }}
-                    >
-                        <p className="mb-1">{h.hour}h</p>
+                    }}
+                >
+                    {groupedByDay[selectedDay].map((h, i) => {
+                        const icon = images?.[h.weathercode] ?? null;
 
-                        {/* Affichage conditionnel de l'icône */}
-                        {icon && (
-                            <img
-                                src={icon}
-                                alt={`Weather ${h.weathercode}`}
-                                style={{ width: "20px", height: "20px", margin: "2px" }}
-                            />
-                        )}
+                        return (
+                            <li
+                                key={i}
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%", // 👈 TRÈS IMPORTANT
+                                    padding: "12px 0",
+                                    borderBottom: "1px solid rgba(255,255,255,0.1)",
+                                    backgroundColor: "#25253F",
+                                    borderRadius: "10px",
+                                    marginTop: "10px",
+                                    marginBottom: "10px",
+                                    color: "white",
+                                }}
+                            >
+                                {/* Gauche : icône + heure */}
+                                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                                    {icon && (
+                                        <img
+                                            src={icon}
+                                            alt=""
+                                            style={{ width: "60px", height: "60px" }}
+                                        />
+                                    )}
+                                    <span>{h.hour}h</span>
+                                </div>
 
-                        <p className="mb-0">{h.temp}°C</p>
-                    </div>
-                );
-            })}
+                                {/* Droite : température */}
+                                <span>{h.temp}°C</span>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
         </section>
     );
 }

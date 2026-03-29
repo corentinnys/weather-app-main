@@ -96,11 +96,11 @@ function App() {
                 </header>
 
                 <main className="row">
-                    <div className="col-12">
+                    <div className="col-lg-8 ">
                         {/* Current weather */}
                         <section className="container-fluid">
                             {/* Bloc Current */}
-                            <div className="current col-9 d-flex flex-column align-items-start mb-4">
+                            <div className="current d-flex flex-column align-items-start mb-4">
                                 <h2 className="text-white mb-3">{cityDisplay || "Aucune ville sélectionnée"}</h2>
 
                                 {data?.current_weather ? (
@@ -121,8 +121,8 @@ function App() {
                             </div>
 
                             {/* Bloc Info-Cards */}
-                            <div className="info-cards-container col-9 w-100">
-                                <div className="info-cards d-flex  ">
+                            <div className="info-cards-container w-100">
+                                <div className="info-cards d-flex ">
                                     <Info value={data?.current_weather?.apparent_temperature ?? "—"} title="Feels like" />
                                     <Info value={data?.current_weather?.windspeed ?? "—"} title="Wind" />
                                     <Info value={data?.current_weather?.humidity ?? "—"} title="Humidity" />
@@ -140,7 +140,7 @@ function App() {
 
                             <div className="row">
                                 <div className="col-12 p-0">
-                                    <div className="d-flex flex-nowrap gap-1 overflow-auto pb-2">
+                                    <div className="d-flex flex-nowrap gap-2 overflow-auto pb-2">
                                         {data?.daily?.time ? (
                                             data.daily.time.map((day, index) => {
                                                 const dateObj = new Date(day + "T00:00:00");
@@ -176,7 +176,15 @@ function App() {
                             </div>
 
                         </section>
-                        <Hours data={data}  weatherImages={weatherImages}/>
+                    </div>
+                    <div className="col-lg-3 col-12">
+                        <div className="scroll-box">
+                            <Hours data={data} />
+                        </div>
+                       {/* <div style={{ height: "500px", overflow: "auto" }}>
+                            <Hours data={data}  />
+                        </div>*/}
+
                     </div>
                 </main>
             </section>

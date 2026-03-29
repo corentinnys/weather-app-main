@@ -32,7 +32,7 @@ body{
 
 .info-cards {
     display: flex;
-    gap: 1rem;        /* espace horizontal entre les cartes */
+    gap: 70px;        /* espace horizontal entre les cartes */
     flex-wrap: wrap;   /* les cartes passent à la ligne si besoin */
 }
 
@@ -102,5 +102,19 @@ h6,.temperature span:not(.jours span){
 /* Hover effet */
 .search-bar button:hover {
     background: #5848d6;
+}
+
+.scroll-box {
+    height: 300px;
+    overflow: auto;
+}
+
+.scroll-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scroll-box::-webkit-scrollbar-thumb {
+    background: #25253F;
+    border-radius: 10px;
 }
 
