@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Info from "./Info";
 import Days from "./Days";
@@ -50,7 +50,43 @@ function App() {
     };
 
 
+    const getUserLocation = () => {
+        if (!navigator.geolocation) {
+            console.error("Géolocalisation non supportée");
+            return;
+        }
 
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+
+                // météo
+                getWeather(lat, lon);
+
+                try {
+                    const res = await fetch(
+                         `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=fr`
+                    );
+
+                    const data = await res.json();
+
+                    setCityDisplay(`${data.city}, ${data.countryName}`);
+
+                } catch (err) {
+                    console.error("Erreur reverse geocoding :", err);
+                    setCityDisplay("Erreur localisation");
+                }
+            },
+            (error) => {
+                console.error("Erreur géolocalisation :", error);
+                setCityDisplay("Permission refusée");
+            }
+        );
+    };
+    useEffect(() => {
+        getUserLocation();
+    }, []);
 
 
 
@@ -73,12 +109,20 @@ function App() {
                 setCityDisplay("Erreur de recherche");
             });
     };
+    const today = new Date();
+
+    const date = today.toLocaleDateString("fr-FR", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
 
     return (
         <div >
             <section className="container">
                 <header className="row justify-content-center text-center">
-                    <h1 className="text-primary">
+                    <h1 className="text-white fs-1 mb-4">
                         How's the sky looking today
                     </h1>
 
@@ -100,20 +144,25 @@ function App() {
                         {/* Current weather */}
                         <section className="container-fluid">
                             {/* Bloc Current */}
-                            <div className="current d-flex flex-column align-items-start mb-4">
-                                <h2 className="text-white mb-3">{cityDisplay || "Aucune ville sélectionnée"}</h2>
+                            <div className="current d-flex flex-row  justify-content-around align-items-center mb-4">
+                                <div className="d-flex flex-column">
+                                    <h2 className="text-white mb-3 city fs-5">
+                                        {cityDisplay || "Aucune ville sélectionnée"}
+                                    </h2>
+                                    <span className="fs-6 text-white d-block">{date}</span>
+                                </div>
 
                                 {data?.current_weather ? (
                                     <div className="info-weather d-flex align-items-center mb-3">
-                                        {data.current_weather.weather_code != null &&
-                                            weatherImages[data.current_weather.weather_code] && (
+                                        {data.current_weather.weathercode != null &&
+                                            weatherImages[data.current_weather.weathercode] && (
                                                 <img
-                                                    src={weatherImages[data.current_weather.weather_code]}
+                                                    src={weatherImages[data.current_weather.weathercode]}
                                                     alt="Weather icon"
                                                     style={{ width: "50px", height: "50px", marginRight: "10px" }}
                                                 />
                                             )}
-                                        <span>{data.current_weather.temperature}°C</span>
+                                        <span className="fs-1 text-white">{data.current_weather.temperature}°C</span>
                                     </div>
                                 ) : (
                                     <span>Loading...</span>
@@ -122,7 +171,7 @@ function App() {
 
                             {/* Bloc Info-Cards */}
                             <div className="info-cards-container w-100">
-                                <div className="info-cards d-flex ">
+                                <div className="info-cards d-flex gap-2 justify-content-between  ">
                                     <Info value={data?.current_weather?.apparent_temperature ?? "—"} title="Feels like" />
                                     <Info value={data?.current_weather?.windspeed ?? "—"} title="Wind" />
                                     <Info value={data?.current_weather?.humidity ?? "—"} title="Humidity" />
@@ -140,7 +189,7 @@ function App() {
 
                             <div className="row">
                                 <div className="col-12 p-0">
-                                    <div className="d-flex flex-nowrap gap-2 overflow-auto pb-2">
+                                    <div className="d-flex  gap-2 overflow-auto justify-content-around">
                                         {data?.daily?.time ? (
                                             data.daily.time.map((day, index) => {
                                                 const dateObj = new Date(day + "T00:00:00");

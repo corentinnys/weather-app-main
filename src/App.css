@@ -2,10 +2,11 @@ body{
     background-color: #02012B;
 }
 .current{
-    background:#25253F;
+    background:url("../assets/images/bg-today-large.svg")no-repeat center center;
     height: 30vh;
     border-radius: 20px;
 }
+
 .info{
     background:#25253F;
     height: 10vh;
@@ -31,13 +32,11 @@ body{
 }
 
 .info-cards {
-    display: flex;
-    gap: 70px;        /* espace horizontal entre les cartes */
-    flex-wrap: wrap;   /* les cartes passent à la ligne si besoin */
+    flex:1;
 }
 
 .info-cards .Info {
-    min-width: 100px; /* uniformise la taille des cartes */
+    min-width: 200px; /* uniformise la taille des cartes */
 
 }
 .height-100{
@@ -105,7 +104,7 @@ h6,.temperature span:not(.jours span){
 }
 
 .scroll-box {
-    height: 300px;
+    height: 70vh;
     overflow: auto;
 }
 
@@ -117,4 +116,5 @@ h6,.temperature span:not(.jours span){
     background: #25253F;
     border-radius: 10px;
 }
+
 
