@@ -1,8 +1,8 @@
 import React, { useState,useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Info from "./info.jsx";
-import Days from "./days.jsx";
-import Hours from "./hours.jsx";
+import Info from './Info';
+import Days from "./days";
+import Hours from "./hours";
 import "./App.css";
 import weatherImages from "./weatherImages.js";
 function App() {
