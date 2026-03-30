@@ -1,6 +1,10 @@
 import { useState } from "react";
-import images from "./weatherImages.js";
-import DaySelector from "./DaySelector";
+
+// Fichier utilitaire / images : vérifie le nom exact du fichier
+import images from "./WeatherImages.js"; // ✅ si le fichier s'appelle exactement WeatherImages.js
+
+// Composant React pour la sélection du jour : majuscule + extension .jsx
+import DaySelector from "./DaySelector.jsx"; // ✅ si le fichier s'appelle DaySelector.jsx
 
 
 export default function Hours({ data }) {
