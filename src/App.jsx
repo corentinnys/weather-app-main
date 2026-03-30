@@ -11,20 +11,7 @@ function App() {
     const [cityDisplay, setCityDisplay] = useState(""); // nom de ville affiché
 
 
-    const getCoordinates = (city) => {
-        return fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.results && data.results.length > 0) {
-                    return {
-                        latitude: data.results[0].latitude,
-                        longitude: data.results[0].longitude
-                    };
-                } else {
-                    throw new Error("City not found");
-                }
-            });
-    };
+
     // Récupération météo
     const getWeather = (lat, lon) => {
         const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,apparent_temperature,relativehumidity_2m,precipitation,windspeed_10m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_sum&timezone=auto`;
@@ -123,9 +110,8 @@ function App() {
             <section className="container">
                 <header className="row justify-content-center text-center">
                     <h1 className="text-white fs-1 mb-4">
-                        How's the sky looking today
+                        {"How's the sky looking today"}
                     </h1>
-
                     <div className="col-12 d-flex justify-content-center">
                         <div className="search-bar d-flex">
                             <input
@@ -134,7 +120,7 @@ function App() {
                                 onChange={(e) => setCity(e.target.value)}
                                 placeholder="Search for a place..."
                             />
-                            <button onClick={handleSearch}>🔍</button>
+                            <button type="button" onClick={handleSearch}>🔍</button>
                         </div>
                     </div>
                 </header>
@@ -154,7 +140,7 @@ function App() {
 
                                 {data?.current_weather ? (
                                     <div className="info-weather d-flex align-items-center mb-3">
-                                        {data.current_weather.weathercode != null &&
+                                        {data.current_weather?.weathercode &&
                                             weatherImages[data.current_weather.weathercode] && (
                                                 <img
                                                     src={weatherImages[data.current_weather.weathercode]}

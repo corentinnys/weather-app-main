@@ -7,18 +7,19 @@ export default function DaySelector({ days, groupedByDay, images, selectedDay, s
         <div style={{ position: "relative"}}>
 
             {/* Bouton */}
-            <div
+            <button
                 onClick={() => setOpen(!open)}
                 style={{
                     background: "#25253F",
                     color: "white",
                     padding: "10px",
                     borderRadius: "10px",
+                    border: "none",
                     cursor: "pointer",
                 }}
             >
                 {selectedDay || "Choisir un jour"}
-            </div>
+            </button>
 
             {/* Liste */}
             {open && (
