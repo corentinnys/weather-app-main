@@ -4,7 +4,7 @@ import Info from './Info.jsx';
 import Days from "./days.jsx";
 import Hours from "./hours.jsx";
 import "./App.css";
-import weatherImages from "./WeatherImages.js";
+import weatherImages from "./weatherImages.js";
 function App() {
     const [data, setData] = useState(null); // données météo
     const [city, setCity] = useState("");    // texte input ville
