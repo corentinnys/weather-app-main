@@ -20,18 +20,18 @@ function App() {
                 if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
                 return res.json();
             })
-            .then(data => {
+            .then(item => {
                 const now = new Date();
                 const currentHour = now.toISOString().slice(0, 13);
-                const hourIndex = data.hourly.time.findIndex(t => t.startsWith(currentHour));
+                const hourIndex = item.hourly.time.findIndex(t => t.startsWith(currentHour));
                 const i = hourIndex !== -1 ? hourIndex : 0;
 
-                data.current_weather.apparent_temperature = data.hourly.apparent_temperature[i] + "°C";
-                data.current_weather.windspeed = data.hourly.windspeed_10m[i] + " km/h";
-                data.current_weather.humidity = data.hourly.relativehumidity_2m[i] + "%";
-                data.current_weather.precipitation = data.hourly.precipitation[i] + " mm";
+                item.current_weather.apparent_temperature = item.hourly.apparent_temperature[i] + "°C";
+                item.current_weather.windspeed = item.hourly.windspeed_10m[i] + " km/h";
+                item.current_weather.humidity = data.hourly.relativehumidity_2m[i] + "%";
+                item.current_weather.precipitation = item.hourly.precipitation[i] + " mm";
 
-                setData({...data});
+                setData({...item});
             })
             .catch(err => console.error("Erreur météo :", err));
     };

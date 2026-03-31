@@ -10,19 +10,7 @@ import DaySelector from "./DaySelector.jsx"; // ✅ si le fichier s'appelle DayS
 export default function Hours({ data }) {
     const [selectedDay, setSelectedDay] = useState(null);
 
-    function getWeatherImage(code, images) {
-        if (code == null || !images) return null;
 
-        // Convertir code en string pour matcher les clés
-        const key = String(code);
-        if (images[key]) return images[key];
-
-        // Fallback : chercher le code le plus proche en dessous
-        const keys = Object.keys(images).map(Number).sort((a, b) => a - b);
-        const num = Number(code);
-        const closest = keys.filter(k => k <= num).pop();
-        return closest != null ? images[String(closest)] : null;
-    }
 
 
     // 1️⃣ Grouper les heures par jour

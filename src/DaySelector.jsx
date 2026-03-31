@@ -8,6 +8,7 @@ export default function DaySelector({ days, groupedByDay, images, selectedDay, s
 
             {/* Bouton */}
             <button
+                type="button"
                 onClick={() => setOpen(!open)}
                 style={{
                     background: "#25253F",
